@@ -76,7 +76,7 @@ namespace Microsoft.SqlServer.Types
 
         public override string ToString()
         {
-            var result = string.Join(" ", _bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+            var result = string.Join(" ", _bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')).ToArray());
             return result.Insert(_bitPosition + (_bitPosition / 8), "|");
         }
     }

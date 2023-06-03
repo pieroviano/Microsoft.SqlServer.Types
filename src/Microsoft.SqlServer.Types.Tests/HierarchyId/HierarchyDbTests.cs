@@ -1,4 +1,8 @@
-﻿namespace Microsoft.SqlServer.Types.Tests.HierarchyId
+﻿#if !NEW
+using System.Data.SqlClient;
+#endif
+
+namespace Microsoft.SqlServer.Types.Tests.HierarchyId
 {
     [TestCategory("Database")]
     [TestCategory("SqlHierarchyId")]

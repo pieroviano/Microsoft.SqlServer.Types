@@ -5,7 +5,7 @@ global using System.Runtime.Serialization;
 global using System.Text;
 
 global using System.Data.SqlTypes;
-#if LEGACY
+#if !NEW
 global using Microsoft.SqlServer.Server;
 #else
 global using Microsoft.Data.SqlClient.Server;

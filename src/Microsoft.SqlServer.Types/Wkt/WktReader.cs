@@ -318,7 +318,24 @@
         {
             SkipSpaces();
             var token = ReadNextToken();
+#if NET45 || NETSTANDARD
             if (System.Buffers.Text.Utf8Parser.TryParse(token, out double value, out int bytesConsumed))
+#else
+            var s = Encoding.UTF8.GetString(token.ToArray());
+            int bytesConsumed = 0;
+            while (s[bytesConsumed] == ' ')
+            {
+                bytesConsumed++;
+            }
+            var indexOf = s.IndexOf(' ', bytesConsumed);
+            if (indexOf >= 0)
+            {
+                s = s.Substring(bytesConsumed, indexOf);
+                bytesConsumed = indexOf;
+            }
+
+            if (double.TryParse(s, out double value))
+#endif
             {
                 if (double.IsNaN(value))
                     throw new FormatException($"24142: Expected \"NULL\" at position {_index - bytesConsumed}. The input has \"{System.Text.Encoding.UTF8.GetString(token.ToArray())})\".");

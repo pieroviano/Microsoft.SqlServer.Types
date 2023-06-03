@@ -9,7 +9,7 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using Microsoft.SqlServer.Types.SqlHierarchy;
 
 global using System.Data.SqlTypes;
-#if LEGACY || NETFRAMEWORK
+#if !NEW || NETFRAMEWORK
 global using Microsoft.SqlServer.Server;
 global using System.Data.SqlClient;
 #elif NET5_0_OR_GREATER

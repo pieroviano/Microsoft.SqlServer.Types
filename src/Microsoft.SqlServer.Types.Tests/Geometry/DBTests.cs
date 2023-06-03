@@ -1,4 +1,8 @@
-﻿namespace Microsoft.SqlServer.Types.Tests.Geometry
+﻿#if !NEW
+using System.Data.SqlClient;
+#endif
+
+namespace Microsoft.SqlServer.Types.Tests.Geometry
 {
     [TestClass]
     [TestCategory("Database")]

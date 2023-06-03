@@ -1,16 +1,24 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+  <Import Project = "$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" />
+  <PropertyGroup>
+    <PackageOutputPath>$(SolutionDir)Packages/</PackageOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+  </PropertyGroup>
+<PropertyGroup><Version>$(VersionPrefix).$(VersionSuffix)</Version></PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net461</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <nullable>enable</nullable>
     <LangVersion>10.0</LangVersion>
-    <Configurations>Debug;Release;Debug_Legacy;Release_Legacy</Configurations>
-    <IsLegacyBuild Condition="$(Configuration.Contains(&quot;Legacy&quot;))">true</IsLegacyBuild>
+    <Configurations>Debug_New;Release_New;Debug;Release</Configurations>
+    <RootNamespace>Microsoft.SqlServer.Types.Tests</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Label="v1.0 Build" Condition="'$(IsLegacyBuild)'=='true'">
-    <DefineConstants>$(DefineConstants);LEGACY</DefineConstants>
+  <PropertyGroup Label="v1.0 Build" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'">
+    <DefineConstants>$(DefineConstants);NEW</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,16 +36,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+	  <PackageReference Include="Net4x.MsTests" Version="$(Net4xMsTestsVersion)" Condition="'$(TargetFramework)'=='net35' or '$(TargetFramework)'=='net40'" />
+	  <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" Condition="'$(TargetFramework)'!='net35'" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" Condition="'$(TargetFramework)'!='net35'" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='net461'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <ProjectReference Include="..\Microsoft.SqlServer.Types\Microsoft.SqlServer.Types.csproj" />
+    <ProjectReference Include="..\Microsoft.SqlServer.Types\Net4x.SqlServer.Types.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net461'">
     <PackageReference Include="Microsoft.SqlServer.Types" Version="14.0.1016.290" GeneratePathProperty="true" />
   </ItemGroup>
-
+  <Import Project = "$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" />
 </Project>

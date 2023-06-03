@@ -3,8 +3,10 @@
 namespace Microsoft.SqlServer.Types.Tests.Geography
 {
     [TestClass]
+#if !NET35
     [TestCategory("SqlGeography")]
     [TestCategory("WKT")]
+#endif
     public class WktTests
     {
 
