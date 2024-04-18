@@ -1,49 +1,44 @@
+<?xml version="1.0" encoding="utf-16"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" />
-	<PropertyGroup>
-		<PackageOutputPath>$(SolutionDir)Packages/</PackageOutputPath>
-		<TargetFrameworks>netstandard2.0;net45;net40;net35</TargetFrameworks>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<LangVersion>10.0</LangVersion>
-		<nullable>enable</nullable>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Configurations>Debug_New;Release_New;Debug;Release</Configurations>
-		<MinorVersion>5.0</MinorVersion>
-		<Version>$(VersionPrefix).$(VersionSuffix)</Version>
-		<RootNamespace>Microsoft.SqlServer.Types</RootNamespace>
-	</PropertyGroup>
-
-	<PropertyGroup Label="Package properties">
-		<Authors>Morten Nielsen</Authors>
-		<Description>Allows you to use SQL Server spatial SqlHierarchy types on a machine without SQL Server installed and decode these UDT types in any .NET Standard client</Description>
-		<PackageTags>SqlGeometry, SqlGeography, SqlHierarchy, SqlServer, UDT</PackageTags>
-		<RepositoryUrl>https://github.com/pieroviano/msbuildtasks</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageProjectUrl>https://github.com/pieroviano/msbuildtasks</PackageProjectUrl>
-		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString('yyyy')) - Morten Nielsen</Copyright>
-		<PackageId>Net4x.SqlServer.Types</PackageId>
-		<PackageReleaseNotes>Added SqlGeography.AsTextZM(). Greatly improved WKT text and writing and closer match behavior of SQL Server.</PackageReleaseNotes>
-		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-	</PropertyGroup>
-
-	<PropertyGroup Label="v1.0 Build" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'">
-		<DefineConstants>$(DefineConstants);NEW</DefineConstants>
-	</PropertyGroup>
-
-	<ItemGroup Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'">
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="$(MicrosoftDataSqlClientVersion)" Condition="'$(TargetFramework)'=='netstandard2.0'" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='Debug' ">
-		<PackageReference Include="System.Data.SqlClient" Version="$(SystemDataSqlClientVersion)" Condition="'$(TargetFramework)'=='netstandard2.0'" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion)" />
-		<PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" />
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net45'" />
-		<None Include="README.md" Pack="true" PackagePath="\" />
-	</ItemGroup>
-
-	<Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" />
+    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" />
+    <PropertyGroup>
+        <PackageOutputPath>$(SolutionDir)Packages/</PackageOutputPath>
+        <TargetFrameworks>netstandard2.0;net45;net40;net35</TargetFrameworks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>10.0</LangVersion>
+        <nullable>enable</nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Configurations>Debug_New;Release_New;Debug;Release</Configurations>
+        <MinorVersion>5.0</MinorVersion>
+        <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+        <RootNamespace>Microsoft.SqlServer.Types</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup Label="Package properties">
+        <Authors>Morten Nielsen</Authors>
+        <Description>Allows you to use SQL Server spatial SqlHierarchy types on a machine without SQL Server installed and decode these UDT types in any .NET Standard client</Description>
+        <PackageTags>SqlGeometry, SqlGeography, SqlHierarchy, SqlServer, UDT</PackageTags>
+        <RepositoryUrl>https://github.com/pieroviano/msbuildtasks</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/pieroviano/msbuildtasks</PackageProjectUrl>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString('yyyy')) - Morten Nielsen</Copyright>
+        <PackageId>Net4x.SqlServer.Types</PackageId>
+        <PackageReleaseNotes>Added SqlGeography.AsTextZM(). Greatly improved WKT text and writing and closer match behavior of SQL Server.</PackageReleaseNotes>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+    <PropertyGroup Label="v1.0 Build" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'">
+        <DefineConstants>$(DefineConstants);NEW</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="$(MicrosoftDataSqlClientVersion)" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug' and '$(TargetFramework)'=='netstandard2.0'" />
+        <PackageReference Include="System.Data.SqlClient" Version="$(SystemDataSqlClientVersion)" Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='Debug'  and '$(TargetFramework)'=='netstandard2.0'" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
+        <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" PrivateAssets="All" />
+        <PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net45'" />
+        <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" />
 </Project>
