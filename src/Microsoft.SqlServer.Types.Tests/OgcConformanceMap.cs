@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.SqlServer.Types.Tests
+namespace Microsoft.SqlServer.Types.Tests;
+
+/// <summary>
+/// Generates the OGC Conformance map in the test database.
+/// Source: http://sharpgis.net/post/2008/02/24/Creating-OGC-conformance-test-map-in-SQL-Server-2008
+/// </summary>
+internal class OgcConformanceMap
 {
-    /// <summary>
-    /// Generates the OGC Conformance map in the test database.
-    /// Source: http://sharpgis.net/post/2008/02/24/Creating-OGC-conformance-test-map-in-SQL-Server-2008
-    /// </summary>
-    internal class OgcConformanceMap
-    {
-        public static string DropTables = @"
+    public static string DropTables = @"
 IF OBJECT_ID('dbo.lakes', 'U') IS NOT NULL DROP TABLE lakes;
 IF OBJECT_ID('dbo.road_segments', 'U') IS NOT NULL DROP TABLE road_segments;
 IF OBJECT_ID('dbo.divided_routes', 'U') IS NOT NULL DROP TABLE divided_routes;
@@ -23,7 +23,7 @@ IF OBJECT_ID('dbo.named_places', 'U') IS NOT NULL DROP TABLE named_places;
 IF OBJECT_ID('dbo.map_neatlines', 'U') IS NOT NULL DROP TABLE map_neatlines;
 IF OBJECT_ID('dbo.employees', 'U') IS NOT NULL DROP TABLE employees;";
 
-        public static string CreateTables = @"
+    public static string CreateTables = @"
 -- Lakes
 CREATE TABLE lakes (fid INTEGER NOT NULL PRIMARY KEY,name VARCHAR(64),shore Geometry);
 -- Road Segments
@@ -47,7 +47,7 @@ CREATE TABLE map_neatlines (fid INTEGER NOT NULL PRIMARY KEY,neatline Geometry);
 -- Employees
 CREATE TABLE employees (fid INTEGER NOT NULL IDENTITY PRIMARY KEY, OrgNode hierarchyid NULL) ";
 
-        public static string CreateRows = @"
+    public static string CreateRows = @"
 -- Lakes
 INSERT INTO lakes VALUES (101, 'BLUE LAKE',Geometry::STPolyFromText('POLYGON((52 18,66 23,73 9,48 6,52 18),(59 18,67 18,67 13,59 13,59 18))', 101));
 -- Road segments
@@ -135,7 +135,7 @@ INSERT INTO employees VALUES('/-15.0/');
 INSERT INTO employees VALUES('/-100.-120/1.2/');
 ";
 
-        /*
+    /*
 INSERT INTO employees VALUES('/1/', 'Peter');
 INSERT INTO employees VALUES('/1/', 'Peter');
 INSERT INTO employees VALUES('/1/2/', 'Julia');
@@ -144,5 +144,4 @@ INSERT INTO employees VALUES('/2/1/', 'Seven');
 INSERT INTO employees VALUES('/2/1.5/', 'Bill')*/
 
 
-    }
 }

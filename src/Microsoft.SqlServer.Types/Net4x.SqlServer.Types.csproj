@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-16"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" />
+    <Import Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" />
     <PropertyGroup>
         <PackageOutputPath>$(SolutionDir)Packages/</PackageOutputPath>
         <TargetFrameworks>netstandard2.0;net45;net40;net35</TargetFrameworks>
@@ -21,24 +21,23 @@
         <RepositoryType>git</RepositoryType>
         <PackageProjectUrl>https://github.com/pieroviano/msbuildtasks</PackageProjectUrl>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString('yyyy')) - Morten Nielsen</Copyright>
+        <Copyright>Copyright (c) 2018-$([System.DateTime]::Now.ToString('yyyy')) - Morten Nielsen</Copyright>
         <PackageId>Net4x.SqlServer.Types</PackageId>
         <PackageReleaseNotes>Added SqlGeography.AsTextZM(). Greatly improved WKT text and writing and closer match behavior of SQL Server.</PackageReleaseNotes>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-    <PropertyGroup Label="v1.0 Build" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'">
+    <PropertyGroup Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug'" Label="v1.0 Build">
         <DefineConstants>$(DefineConstants);NEW</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="$(MicrosoftDataSqlClientVersion)" Condition="'$(Configuration)'!='Release' and '$(Configuration)'!='Debug' and '$(TargetFramework)'=='netstandard2.0'" />
-        <PackageReference Include="System.Data.SqlClient" Version="$(SystemDataSqlClientVersion)" Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='Debug'  and '$(TargetFramework)'=='netstandard2.0'" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Condition="'$(TargetFramework)'=='netstandard2.0'" Version="$(MicrosoftDataSqlClientVersion)" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
-        <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" PrivateAssets="All" />
-        <PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net45'" />
         <None Include="README.md" Pack="true" PackagePath="\" />
+        <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
+        <PackageReference Include="NuGetUtility" PrivateAssets="All" Version="$(NuGetUtilityVersion)" />
+        <PackageReference Include="System.Memory" Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net45'" Version="$(SystemMemoryVersion)" />
     </ItemGroup>
-    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" />
+    <Import Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" />
 </Project>
